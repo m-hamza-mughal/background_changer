@@ -1,0 +1,21 @@
+BACKGROUND:
+  NUM_VARIATIONS: 1
+  DIR: "./data/backgrounds/"
+
+DATA:
+  FORMAT: video
+
+DETECTRON:
+  DEVICE: cpu
+  SCORE_THRESH: 0.6
+  NMS_THRESH: 0.2
+  CONFIG_FILE: "COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"
+
+OUTPUT:
+  DIR: "./data/output/video/"
+  FORMAT: avi
+
+INPUT:
+  DIR: "./data/test_data/"
+  FORMAT: avi
+
