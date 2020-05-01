@@ -3,7 +3,9 @@
 After installing required dependencies from [INSTALL.md](INSTALL.md), you need to specify input and output directory paths and formats in a config file. 
 Or simply, you can place you images or videos in [test_data](data/test_data)
 
-Sample file can be found in [configs](configs)
+Sample file can be found in [configs](configs).
+
+If you are running on CPU, change DETECTRON.DEVICE in config to 'cpu'
 
 Run this command by passing config file as an argument
 ```
