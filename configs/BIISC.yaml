@@ -6,7 +6,7 @@ DATA:
   FORMAT: image
 
 DETECTRON:
-  DEVICE: cpu
+  DEVICE: cuda
   SCORE_THRESH: 0.6
   NMS_THRESH: 0.2
   CONFIG_FILE: "COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"
