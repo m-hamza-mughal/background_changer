@@ -1,3 +1,4 @@
+from time import time
 import glob
 import random
 import cv2
@@ -6,8 +7,8 @@ from .detectron_helper import Segmenter
 from .video_helper import VideoReader
 
 
-def process_video(cfg, file, bck_path, bck_idx):
-    segmentation_predictor = Segmenter(cfg)
+def process_video(cfg, file, bck_path, bck_idx, predictor):
+    start = time()
     frame_iterator = VideoReader(cfg, file, bck_idx)
     background_im = cv2.imread(bck_path)
 
@@ -16,7 +17,7 @@ def process_video(cfg, file, bck_path, bck_idx):
             break
 
         background = background_im.copy()
-        mask = segmentation_predictor.predict(frame)
+        mask = predictor.predict(frame)
         clone = frame.copy()
 
         # Inflate the mask
@@ -32,16 +33,16 @@ def process_video(cfg, file, bck_path, bck_idx):
         frame_iterator.write_frame(combined_image)
 
     frame_iterator.clean()
-    print("Completed:", frame_iterator.video_out_name.split('/')[-1])
+    print("Completed:", frame_iterator.video_out_name.split('/')[-1], "Time:", time()-start)
 
 
-def process_image(cfg, file, bck_path, bck_idx):
-    segmentation_predictor = Segmenter(cfg)
+def process_image(cfg, file, bck_path, bck_idx, predictor):
+    start = time()
     image = cv2.imread(file)
     out_image = cfg.OUTPUT.DIR + file.split('/')[-1][:-4] + "_BCK{}.".format(bck_idx) + cfg.OUTPUT.FORMAT
     background = cv2.imread(bck_path)
 
-    mask = segmentation_predictor.predict(image)
+    mask = predictor.predict(image)
     clone = image.copy()
 
     # Inflate the mask
@@ -55,7 +56,7 @@ def process_image(cfg, file, bck_path, bck_idx):
     combined_image = background + clone
 
     cv2.imwrite(out_image, combined_image)
-    print("Completed:", out_image.split('/')[-1])
+    print("Completed:", out_image.split('/')[-1], "Time:", time()-start)
 
 
 def process_data(cfg):
@@ -71,11 +72,13 @@ def process_data(cfg):
     list_of_files = glob.glob(cfg.INPUT.DIR + "*." + cfg.INPUT.FORMAT)
     assert len(list_of_files) > 0, "No input files found"
 
+    segmentation_predictor = Segmenter(cfg)
+
     for file_path in list_of_files:
         for bck_idx, bck_path in enumerate(list_of_backgrounds):
             if cfg.DATA.FORMAT == "video":
-                process_video(cfg, file_path, bck_path, bck_idx)
+                process_video(cfg, file_path, bck_path, bck_idx, segmentation_predictor)
             else:
-                process_image(cfg, file_path, bck_path, bck_idx)
+                process_image(cfg, file_path, bck_path, bck_idx, segmentation_predictor)
 
     print("Data Converted. \nFiles available at: ", cfg.OUTPUT.DIR)
