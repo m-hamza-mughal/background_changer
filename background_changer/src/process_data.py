@@ -63,7 +63,10 @@ def process_data(cfg):
         "No background images available.\nMake sure images are in .jpg format"
 
     num_backgrounds = cfg.BACKGROUND.NUM_VARIATIONS
-    list_of_backgrounds = random.sample(glob.glob(cfg.BACKGROUND.DIR + "*.jpg"), num_backgrounds)
+    if num_backgrounds > 0:
+        list_of_backgrounds = random.sample(glob.glob(cfg.BACKGROUND.DIR + "*.jpg"), num_backgrounds)
+    else:
+        list_of_backgrounds = glob.glob(cfg.BACKGROUND.DIR + "*.jpg")
 
     list_of_files = glob.glob(cfg.INPUT.DIR + "*." + cfg.INPUT.FORMAT)
     assert len(list_of_files) > 0, "No input files found"

@@ -1,5 +1,5 @@
 BACKGROUND:
-  NUM_VARIATIONS: 1
+  NUM_VARIATIONS: -1  # -1 means all backgrounds
   DIR: "./data/backgrounds/"
 
 DATA:

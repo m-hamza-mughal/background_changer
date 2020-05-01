@@ -30,4 +30,4 @@ class Segmenter:
 
         person_mask = mask[person_indices]
         person_mask = person_mask.sum(axis=0)
-        return person_mask.numpy()
+        return person_mask.cpu().numpy()
