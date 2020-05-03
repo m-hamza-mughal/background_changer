@@ -21,7 +21,6 @@ def parse_args():
         "--cfg",
         dest="cfg_file",
         help="Path to the config file",
-        default="configs/BIISC.yaml",
         type=str,
     )
 
@@ -31,7 +30,7 @@ def parse_args():
         default=None,
         nargs=argparse.REMAINDER,
     )
-    if len(sys.argv) == 1:  # TODO: reconsider this
+    if len(sys.argv) == 1:
         parser.print_help()
     return parser.parse_args()
 
@@ -47,13 +46,6 @@ def load_config(args):
 
     if args.opts is not None:
         cfg.merge_from_list(args.opts)
-
-    if hasattr(args, "input_dir"):
-        cfg.INPUT.DIR = args.input_dir
-    if hasattr(args, "data_format"):
-        cfg.DATA.FORMAT = args.data_format
-    if hasattr(args, "output_dir"):
-        cfg.OUTPUT.DIR = args.output_dir
 
     return cfg
 
