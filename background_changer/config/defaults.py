@@ -66,15 +66,19 @@ _C.INPUT.DIR = "./data/test_data/"
 
 _C.INPUT.FORMAT = "avi" if _C.DATA.FORMAT == "video" else "jpg"
 
+# Miscellaneous options
+
+_C.VERBOSITY = 0
+
 
 def _assert_and_infer_cfg(cfg):
     # Background assertions.
     assert cfg.BACKGROUND.NUM_VARIATIONS != 0
-    # TRAIN assertions.
     assert cfg.DATA.FORMAT in ["video", "image"]
     assert cfg.DETECTRON.DEVICE in ["cpu", "cuda"]
-
+    assert cfg.VERBOSITY in [0, 1]
     assert cfg.DETECTRON.SCORE_THRESH > 0
+
     return cfg
 
 

@@ -19,3 +19,5 @@ INPUT:
   DIR: "./data/test_data/"
   FORMAT: jpg
 
+VERBOSITY: 0
+

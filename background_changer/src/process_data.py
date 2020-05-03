@@ -33,7 +33,8 @@ def process_video(cfg, file, bck_path, bck_idx, predictor):
         frame_iterator.write_frame(combined_image)
 
     frame_iterator.clean()
-    print("Completed:", frame_iterator.video_out_name.split('/')[-1], "Time:", time()-start)
+    if cfg.VERBOSITY == 1:
+        print("Completed:", frame_iterator.video_out_name.split('/')[-1], "Time:", time()-start)
 
 
 def process_image(cfg, file, bck_path, bck_idx, predictor):
@@ -56,7 +57,8 @@ def process_image(cfg, file, bck_path, bck_idx, predictor):
     combined_image = background + clone
 
     cv2.imwrite(out_image, combined_image)
-    print("Completed:", out_image.split('/')[-1], "Time:", time()-start)
+    if cfg.VERBOSITY == 1:
+        print("Completed:", out_image.split('/')[-1], "Time:", time()-start)
 
 
 def process_data(cfg):
