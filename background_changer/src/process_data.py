@@ -2,6 +2,7 @@ from time import time
 import glob
 import random
 import cv2
+from tqdm import tqdm
 
 from .detectron_helper import Segmenter
 from .video_helper import VideoReader
@@ -76,7 +77,7 @@ def process_data(cfg):
 
     segmentation_predictor = Segmenter(cfg)
 
-    for file_path in list_of_files:
+    for file_path in tqdm(list_of_files):
         for bck_idx, bck_path in enumerate(list_of_backgrounds):
             if cfg.DATA.FORMAT == "video":
                 process_video(cfg, file_path, bck_path, bck_idx, segmentation_predictor)
